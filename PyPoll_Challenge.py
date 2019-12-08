@@ -45,14 +45,7 @@ with open(file_to_load) as election_data:
         # add the ballots cast to the county's count
         ballots_cast_in_each_county[county_name] += 1
 
-# with open(file_to_save, "w") as txt_file:
-#     election_results = (
-#         f"\nElection Results\n"
-#         f"-------------------------\n"
-#         f"Total Votes: {total_ballots:,}\n"
-#         f"-------------------------\n"
-#         f"\nCounty Votes:\n")
-#     print(election_results, end="")
+
 
     # Determine the percentage of ballot for each county by looping through the counts.
     # 1. Iterate through the counties.
@@ -63,7 +56,7 @@ with open(file_to_load) as election_data:
         ballot_percentage = float(ballots) / float(total_ballots) * 100
         county_election_results = (f"{county}: {ballot_percentage:.1f}% ({ballots:,})")
         
-        print(f"{county_election_results}\n")
+#       print(f"{county_election_results}\n")
         
         if (float(ballots) > county_with_the_most_votes) and (ballot_percentage > the_percentage_of_all_votes_cast):
             # If true then set winning_count = votes and winning_percent =
@@ -109,14 +102,28 @@ with open(file_to_save, "w") as txt_file:
         f"County with largest turnout: {county_with_the_largest_voter_turnout}\n"
         f"------------------------\n")
     print(election_results, end="")
+
+# Determine the percentage of ballot for each county by looping through the counts.
+    # 1. Iterate through the counties.
+    for county in ballots_cast_in_each_county:
+        # 2. Retrieve vote count of a counties.
+        ballots = ballots_cast_in_each_county[county]
+        # 3. Calculate the percentage of ballot.
+        ballot_percentage = float(ballots) / float(total_ballots) * 100
+        county_election_results = (f"{county}: {ballot_percentage:.1f}% ({ballots:,})")
+        
+        print(f"{county_election_results}\n")
+
+        txt_file.write(county_election_results)
+
+    
     # Save the final vote count to the text file.
     txt_file.write(election_results)
     for candidate in candidate_votes:
         # Retrieve vote count and percentage.
         votes = candidate_votes[candidate]
         vote_percentage = float(votes) / float(total_votes) * 100
-        candidate_results = (
-            f"{candidate}: {vote_percentage:.1f}% ({votes:,})\n")
+        candidate_results = (f"{candidate}: {vote_percentage:.1f}% ({votes:,})\n")
 
         # Print each candidate's voter count and percentage to the terminal.
         print(candidate_results)
